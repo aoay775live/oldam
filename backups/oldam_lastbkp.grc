@@ -1,0 +1,2620 @@
+options:
+  parameters:
+    author: Perplexity AI
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: Professional AM Modulator with audio processing
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: .
+    id: am_modulator_pro
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: AM Modulator Professional
+    window_size: (1400,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 16.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: antenna_hz
+  id: variable_qtgui_range
+  parameters:
+    comment: Antenna sway FM wobble depth
+    gui_hint: 1,8,1,1
+    label: Antenna Effect (Hz)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '1'
+    stop: '120'
+    value: '24'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [3344, 16.0]
+    rotation: 0
+    state: enabled
+- name: audio_profile
+  id: variable_qtgui_chooser
+  parameters:
+    comment: Audio path profile
+    gui_hint: 0,7,1,1
+    label: Audio Profile
+    label0: Music
+    label1: Mic
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: '0'
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2816, 16.0]
+    rotation: 0
+    state: enabled
+- name: audio_pull_hz
+  id: variable_qtgui_range
+  parameters:
+    comment: Frequency pulling by audio (Hz)
+    gui_hint: 0,3,1,1
+    label: Audio Pull (Hz)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '1'
+    stop: '2000'
+    value: '1300'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1408, 16.0]
+    rotation: 0
+    state: enabled
+- name: carrier_freq
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,0,1,1
+    label: Carrier Frequency (Hz)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '100'
+    stop: '24000'
+    value: '1000'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [312, 16.0]
+    rotation: 0
+    state: enabled
+- name: drift_hz
+  id: variable_qtgui_range
+  parameters:
+    comment: Slow random carrier drift (Hz)
+    gui_hint: 1,3,1,1
+    label: Drift (Hz)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '1'
+    stop: '500'
+    value: '500'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1584, 16.0]
+    rotation: 0
+    state: enabled
+- name: hf_boost
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 1,2,1,1
+    label: HF Boost (dB)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '1'
+    stop: '12'
+    value: '0'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1240, 16.0]
+    rotation: 0
+    state: enabled
+- name: hum50_level
+  id: variable_qtgui_range
+  parameters:
+    comment: Mains hum injection level
+    gui_hint: 0,6,1,1
+    label: Hum 50Hz Level
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.001'
+    stop: '0.15'
+    value: '0.06'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2464, 16.0]
+    rotation: 0
+    state: enabled
+- name: hum50_on
+  id: variable_qtgui_check_box
+  parameters:
+    comment: Enable/disable mains hum
+    'false': '0'
+    gui_hint: 1,6,1,1
+    label: Hum 50Hz ON
+    'true': '1'
+    type: int
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2640, 16.0]
+    rotation: 0
+    state: enabled
+- name: hum_dynamic
+  id: variable_qtgui_range
+  parameters:
+    comment: Dynamic mains sag response
+    gui_hint: 0,8,1,1
+    label: Hum Dynamic
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.1'
+    stop: '3.0'
+    value: '1.2'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [3168, 16.0]
+    rotation: 0
+    state: enabled
+- name: mic_chaos
+  id: variable_qtgui_range
+  parameters:
+    comment: Brutality amount for Mic mode
+    gui_hint: 0,9,1,1
+    label: Mic Chaos
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.1'
+    stop: '8'
+    value: '4.5'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [3520, 16.0]
+    rotation: 0
+    state: enabled
+- name: mod_depth
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,1,1,1
+    label: Modulation Depth (%)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '5'
+    stop: '150'
+    value: '150'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 16.0]
+    rotation: 0
+    state: enabled
+- name: neg_peak_limit
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,2,1,1
+    label: Negative Peak Limit (%)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '50'
+    step: '1'
+    stop: '100'
+    value: '100'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [664, 16.0]
+    rotation: 0
+    state: enabled
+- name: output_power
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 1,0,1,1
+    label: Output Power (%)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.1'
+    stop: '100'
+    value: '0.5'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [856, 16.0]
+    rotation: 0
+    state: enabled
+- name: parasitic_fm_hz
+  id: variable_qtgui_range
+  parameters:
+    comment: Fast random parasitic FM deviation (Hz)
+    gui_hint: 1,4,1,1
+    label: Parasitic FM (Hz)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '10'
+    stop: '1000'
+    value: '260'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1936, 16.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '48000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 16.0]
+    rotation: 0
+    state: enabled
+- name: selfosc_level
+  id: variable_qtgui_range
+  parameters:
+    comment: Self-oscillation injection level
+    gui_hint: 0,5,1,1
+    label: Self-Osc Level
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.0001'
+    stop: '0.01'
+    value: '0.0036'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2112, 16.0]
+    rotation: 0
+    state: enabled
+- name: selfosc_on
+  id: variable_qtgui_check_box
+  parameters:
+    comment: Enable/disable self-oscillation tones
+    'false': '0'
+    gui_hint: 1,5,1,1
+    label: Self-Osc ON
+    'true': '1'
+    type: int
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2288, 16.0]
+    rotation: 0
+    state: enabled
+- name: splatter_drive
+  id: variable_qtgui_range
+  parameters:
+    comment: Positive soft clip drive (tanh)
+    gui_hint: 1,7,1,1
+    label: Splatter Drive
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0.5'
+    step: '0.1'
+    stop: '8.0'
+    value: '0.9'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2992, 16.0]
+    rotation: 0
+    state: enabled
+- name: waterfall_brightness
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 1,1,1,1
+    label: Waterfall Brightness
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '-100'
+    step: '5'
+    stop: '20'
+    value: '-100'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1040, 16.0]
+    rotation: 0
+    state: enabled
+- name: xmode_level
+  id: variable_qtgui_range
+  parameters:
+    comment: Experimental weirdness level
+    gui_hint: 1,9,1,1
+    label: X-Mode Level
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.01'
+    stop: '0.50'
+    value: '0.09'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [3696, 16.0]
+    rotation: 0
+    state: enabled
+- name: xmode_on
+  id: variable_qtgui_check_box
+  parameters:
+    comment: Extra experimental modulation
+    'false': '0'
+    gui_hint: 0,10,1,1
+    label: X-Mode ON
+    'true': '1'
+    type: int
+    value: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [3872, 16.0]
+    rotation: 0
+    state: enabled
+- name: analog_agc2_xx_0
+  id: analog_agc2_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    attack_rate: '0.02'
+    comment: ''
+    decay_rate: '0.002'
+    gain: '1.0'
+    max_gain: '8'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    reference: '0.35'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 368.0]
+    rotation: 0
+    state: enabled
+- name: analog_agc_xx_0
+  id: analog_agc_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Stronger AGC
+    gain: '1'
+    max_gain: '1.8'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    rate: '0.02'
+    reference: '0.9'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [304, 376.0]
+    rotation: 0
+    state: enabled
+- name: analog_frequency_modulator_fc_0
+  id: analog_frequency_modulator_fc
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Dirty VFO phase/frequency wobble
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    sensitivity: 6.283185307179586/samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [72, 688.0]
+    rotation: 0
+    state: enabled
+- name: analog_noise_source_x_0
+  id: analog_noise_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: White noise for random drift
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    noise_type: analog.GR_GAUSSIAN
+    seed: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [48, 104.0]
+    rotation: 0
+    state: enabled
+- name: analog_noise_source_x_1
+  id: analog_noise_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: Wideband noise for parasitic FM
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    noise_type: analog.GR_GAUSSIAN
+    seed: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [48, 56.0]
+    rotation: 0
+    state: enabled
+- name: analog_noise_source_x_antenna
+  id: analog_noise_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: Antenna random motion source
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    noise_type: analog.GR_GAUSSIAN
+    seed: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [48, 752.0]
+    rotation: 0
+    state: enabled
+- name: analog_noise_source_x_selfosc
+  id: analog_noise_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: Self-osc random pitch source
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    noise_type: analog.GR_GAUSSIAN
+    seed: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [416, 560.0]
+    rotation: 0
+    state: enabled
+- name: analog_noise_source_x_xmode
+  id: analog_noise_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: Experimental crackle/noise
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    noise_type: analog.GR_IMPULSE
+    seed: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 640.0]
+    rotation: 0
+    state: enabled
+- name: analog_rail_ff_0
+  id: analog_rail_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Hard clip I
+    hi: '0.22'
+    lo: '-0.22'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [872, 520.0]
+    rotation: 0
+    state: enabled
+- name: analog_rail_ff_1
+  id: analog_rail_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Hard clip Q
+    hi: '0.22'
+    lo: '-0.22'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [872, 608.0]
+    rotation: 0
+    state: enabled
+- name: analog_rail_ff_freqcmd
+  id: analog_rail_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Guard frequency command from runaway/NaN-like bursts
+    hi: '6000'
+    lo: '-6000'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1320, 672.0]
+    rotation: 0
+    state: enabled
+- name: analog_rail_ff_hum
+  id: analog_rail_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Hard-shape hum for extra harmonics
+    hi: '0.55'
+    lo: '-0.55'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [456, 592.0]
+    rotation: 0
+    state: enabled
+- name: analog_rail_ff_pull
+  id: analog_rail_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Limit transients into frequency pulling path
+    hi: '0.35'
+    lo: '-0.35'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [880, 816.0]
+    rotation: 0
+    state: enabled
+- name: analog_sig_source_x_1
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: Self-osc tone 1
+    freq: '1850'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: samp_rate
+    showports: 'False'
+    type: float
+    waveform: analog.GR_SIN_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 336.0]
+    rotation: 0
+    state: enabled
+- name: analog_sig_source_x_2
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: Self-osc tone 2
+    freq: '3470'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: samp_rate
+    showports: 'False'
+    type: float
+    waveform: analog.GR_SIN_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [48, 504.0]
+    rotation: 0
+    state: enabled
+- name: analog_sig_source_x_hum100
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: Add even harmonics/asymmetry
+    freq: '100'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: samp_rate
+    showports: 'False'
+    type: float
+    waveform: analog.GR_SAW_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [48, 616.0]
+    rotation: 0
+    state: enabled
+- name: analog_sig_source_x_hum50
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: Mains hum base with rich odd harmonics
+    freq: '50'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: samp_rate
+    showports: 'False'
+    type: float
+    waveform: analog.GR_SQR_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [48, 592.0]
+    rotation: 0
+    state: enabled
+- name: audio_sink_0
+  id: audio_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Stereo IQ Output
+    device_name: '"CABLE Input (VB-Audio Virtual C"'
+    num_inputs: '2'
+    ok_to_block: 'True'
+    samp_rate: samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1760, 656.0]
+    rotation: 0
+    state: enabled
+- name: audio_source_0
+  id: audio_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Audio Input
+    device_name: '"VoiceMeeter Output (VB-Audio Vo"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_outputs: '1'
+    ok_to_block: 'True'
+    samp_rate: samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 236.0]
+    rotation: 0
+    state: enabled
+- name: blocks_abs_xx_0
+  id: blocks_abs_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Envelope follower source
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1240, 264.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_const_vxx_0
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: DC offset
+    const: '1.0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1208, 360.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_const_vxx_humdyn
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Keep base hum at silence
+    const: '1.0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1760, 264.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_0
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Mix LPF + boosted HF
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [928, 216.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_1
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Carrier + audio pull + random drift (Hz)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '6'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1112, 672.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_2
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Add self-osc tones to audio chain
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '4'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1256, 176.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_3
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Sum self-osc tones
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 480.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_antenna
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Antenna random walk mix
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [560, 752.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_asym
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Asymmetric clipping recombine
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [560, 376.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_hum
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Build ugly mains hum waveform
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [272, 592.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_mic
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Mic low-end + midband mix
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [560, 272.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_selfosc
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Random self-osc instantaneous frequency
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '3'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [776, 496.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_trash
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Collect disconnected legacy branches
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '13'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [760, 928.0]
+    rotation: 0
+    state: enabled
+- name: blocks_complex_to_float_0
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: I/Q Split
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 560.0]
+    rotation: 0
+    state: enabled
+- name: blocks_float_to_complex_0
+  id: blocks_float_to_complex
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: To complex
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 520.0]
+    rotation: 0
+    state: enabled
+- name: blocks_float_to_complex_1
+  id: blocks_float_to_complex
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Repack clipped I/Q
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1048, 560.0]
+    rotation: 0
+    state: enabled
+- name: blocks_max_xx_0
+  id: blocks_max_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: 'Negative peak limiter
+
+      max(envelope, min_level)'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+    vlen_out: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1488, 344.0]
+    rotation: 0
+    state: enabled
+- name: blocks_max_xx_1
+  id: blocks_max_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+    vlen_out: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [584, 408.0]
+    rotation: 0
+    state: enabled
+- name: blocks_max_xx_2
+  id: blocks_max_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Positive half-wave
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+    vlen_out: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [392, 344.0]
+    rotation: 0
+    state: enabled
+- name: blocks_min_xx_0
+  id: blocks_min_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+    vlen_out: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [720, 408.0]
+    rotation: 0
+    state: enabled
+- name: blocks_min_xx_1
+  id: blocks_min_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Negative hard clip branch
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+    vlen_out: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [392, 424.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Apply modulation depth
+    const: mod_depth/100.0
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1000, 360.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_1
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Output Power Control
+    const: output_power/100.0
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [504, 592.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_2
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: 1/1.5
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [816, 368.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_antenna
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Antenna-induced FM wobble depth
+    const: '1.0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [224, 752.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_antenna_fast
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Faster random component
+    const: antenna_hz*0.35
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [416, 784.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_antenna_slow
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Slow random component
+    const: antenna_hz
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [416, 736.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_audio_pull
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Audio-induced VFO pulling
+    const: audio_pull_hz
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [920, 752.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_drift
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Random drift depth
+    const: drift_hz
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [912, 172.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_hf
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: 'HF boost gain
+
+      dB to linear'
+    const: 10**(hf_boost/20.0)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 200.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_hum
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Hum enable * level
+    const: hum50_on*hum50_level
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [640, 592.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_hum100
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Hum 100 Hz relative level
+    const: '0.38'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [232, 656.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_humdyn
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Dynamic hum depth from envelope
+    const: hum_dynamic
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1568, 264.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_mic_drive
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Mic channel brutal overdrive
+    const: mic_chaos
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 272.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_mic_low
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Extra low end in mic mode
+    const: '0.9'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [392, 336.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_mic_norm
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Mic overdrive normalization
+    const: 1.0/(mic_chaos+1e-6)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1072, 272.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_par_fm
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Fast parasitic FM depth
+    const: parasitic_fm_hz
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [920, 108.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_posdrive
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Soft clip drive
+    const: splatter_drive
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [560, 312.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_posnorm
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Soft clip normalize
+    const: 1.0/splatter_drive
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [920, 312.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_selfosc
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Self-osc enable * level
+    const: selfosc_on*selfosc_level
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [456, 480.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_selfosc_audio
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Audio-dependent self-osc pitch shift
+    const: '1000'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [584, 448.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_selfosc_rand
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Self-osc random frequency wander
+    const: '1600'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [584, 560.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_vxx_xmode
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Experimental mode injection gain
+    const: xmode_on*xmode_level
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1072, 640.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_xx_0
+  id: blocks_multiply_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: AM Modulation
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [296, 536.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_xx_humdyn
+  id: blocks_multiply_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Hum tracks audio load
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1952, 264.0]
+    rotation: 0
+    state: enabled
+- name: blocks_null_sink_0
+  id: blocks_null_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    bus_structure_sink: '[[0,],]'
+    comment: Discard legacy fixed self-osc branch
+    num_inputs: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [456, 528.0]
+    rotation: 0
+    state: enabled
+- name: blocks_null_sink_1
+  id: blocks_null_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    bus_structure_sink: '[[0,],]'
+    comment: Discard legacy oscillator branch
+    num_inputs: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1104, 496.0]
+    rotation: 0
+    state: enabled
+- name: blocks_selector_0
+  id: blocks_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Music/Mic audio profile selector
+    enabled: 'True'
+    input_index: audio_profile
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    num_outputs: '1'
+    output_index: '0'
+    showports: 'False'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [440, 224.0]
+    rotation: 0
+    state: enabled
+- name: blocks_transcendental_0
+  id: blocks_transcendental
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Soft clip positive branch
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"tanh"'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 312.0]
+    rotation: 0
+    state: enabled
+- name: blocks_transcendental_1
+  id: blocks_transcendental
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Mic mode hard saturation
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"tanh"'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [904, 272.0]
+    rotation: 0
+    state: enabled
+- name: blocks_vco_f_0
+  id: blocks_vco_f
+  parameters:
+    affinity: ''
+    alias: ''
+    amplitude: '1'
+    comment: Randomized self-oscillator
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    sensitivity: 6.283185307179586/samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1328, 444.0]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_source_x_0
+  id: blocks_vector_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Minimum envelope level
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    repeat: 'True'
+    tags: '[]'
+    type: float
+    vector: (1.0 - neg_peak_limit/100.0,)
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [456, 464.0]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_source_x_1
+  id: blocks_vector_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    repeat: 'True'
+    tags: '[]'
+    type: float
+    vector: '[-1.5]'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [568, 312.0]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_source_x_1_0
+  id: blocks_vector_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    repeat: 'True'
+    tags: '[]'
+    type: float
+    vector: '[1.5]'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 304.0]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_source_x_2
+  id: blocks_vector_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Zero reference for asym clipping
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    repeat: 'True'
+    tags: '[]'
+    type: float
+    vector: '[0.0]'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [232, 392.0]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_source_x_carrier
+  id: blocks_vector_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Carrier frequency as stream (Hz)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    repeat: 'True'
+    tags: '[]'
+    type: float
+    vector: (carrier_freq,)
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [904, 592.0]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_source_x_selfosc_base
+  id: blocks_vector_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Self-osc base frequency
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    repeat: 'True'
+    tags: '[]'
+    type: float
+    vector: '[2200.0]'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [560, 512.0]
+    rotation: 0
+    state: enabled
+- name: epy_block_antenna
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np\nfrom gnuradio import gr\n\nclass blk(gr.sync_block):\n\
+      \    def __init__(self):\n        gr.sync_block.__init__(self, name='Antenna\
+      \ Chaos LFO', in_sig=None, out_sig=[np.float32])\n        self.state = 0.0\n\
+      \        self.slew = 0.0025\n\n    def work(self, input_items, output_items):\n\
+      \        out = output_items[0]\n        n = len(out)\n        if np.random.rand()\
+      \ < 0.03:\n            self.slew = float(np.clip(self.slew * (0.6 + 0.9 * np.random.rand()),\
+      \ 3e-4, 0.02))\n        steps = np.random.randn(n).astype(np.float32) * self.slew\n\
+      \        walk = np.cumsum(steps, dtype=np.float32) + np.float32(self.state)\n\
+      \        if np.random.rand() < 0.02:\n            walk += np.float32(np.random.uniform(-0.35,\
+      \ 0.35))\n        walk = np.clip(walk, -1.0, 1.0)\n        self.state = float(walk[-1])\n\
+      \        out[:] = walk * 1.3 + 0.03 * np.random.randn(n).astype(np.float32)\n\
+      \        return n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Antenna Chaos LFO', 'blk', [], [], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [760, 864.0]
+    rotation: 0
+    state: enabled
+- name: epy_block_selfosc
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np\nfrom gnuradio import gr\n\nclass blk(gr.sync_block):\n\
+      \    def __init__(self):\n        gr.sync_block.__init__(self, name='Self Osc\
+      \ Chaos', in_sig=None, out_sig=[np.float32])\n        self.fs = 48000.0\n  \
+      \      self.phase = 0.0\n        self.wander = 0.0\n        self.step = 0.01\n\
+      \n    def work(self, input_items, output_items):\n        out = output_items[0]\n\
+      \        n = len(out)\n        if np.random.rand() < 0.02:\n            self.step\
+      \ = float(np.clip(self.step * (0.5 + np.random.rand()), 0.002, 0.05))\n    \
+      \    w = np.cumsum(np.random.randn(n).astype(np.float32) * self.step, dtype=np.float32)\
+      \ + np.float32(self.wander)\n        w = np.clip(w, -1.0, 1.0)\n        self.wander\
+      \ = float(w[-1])\n        f = 1200.0 + 5200.0 * w + 60.0 * np.random.randn(n).astype(np.float32)\n\
+      \        ph = self.phase + (2.0 * np.pi / self.fs) * np.cumsum(f, dtype=np.float32)\n\
+      \        s = np.sin(ph) + 0.35 * np.sin(2.07 * ph + 0.4) + 0.2 * np.sin(3.91\
+      \ * ph + 1.7)\n        if np.random.rand() < 0.04:\n            m = min(96,\
+      \ n)\n            i0 = np.random.randint(0, max(1, n - m))\n            s[i0:i0\
+      \ + m] += np.hanning(m).astype(np.float32) * np.float32(np.random.uniform(0.5,\
+      \ 1.2))\n        out[:] = 0.5 * np.tanh(1.8 * s).astype(np.float32)\n      \
+      \  self.phase = float(np.mod(ph[-1], 2.0 * np.pi))\n        return n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Self Osc Chaos', 'blk', [], [], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [760, 560.0]
+    rotation: 0
+    state: enabled
+- name: high_pass_filter_0
+  id: high_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: 'HPF for HF boost
+
+      3 kHz'
+    cutoff_freq: '2000'
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_fff
+    width: '500'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [472, 176.0]
+    rotation: 0
+    state: enabled
+- name: high_pass_filter_1
+  id: high_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: ''
+    cutoff_freq: '200'
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_fff
+    width: '1000'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1096, 176.0]
+    rotation: 0
+    state: enabled
+- name: high_pass_filter_2
+  id: high_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: Mic profile HPF
+    cutoff_freq: '300'
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_fff
+    width: '180'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [256, 272.0]
+    rotation: 0
+    state: enabled
+- name: low_pass_filter_0
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: 'Audio LPF
+
+      6 kHz cutoff
+
+      steep rolloff'
+    cutoff_freq: '12000'
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_fff
+    width: '5000'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [256, 176.0]
+    rotation: 0
+    state: enabled
+- name: low_pass_filter_1
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: Smooth drift noise to slow wobble
+    cutoff_freq: '25'
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_fff
+    width: '10'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [680, 104.0]
+    rotation: 0
+    state: enabled
+- name: low_pass_filter_2
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: Shape parasitic FM noise
+    cutoff_freq: '3500'
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_fff
+    width: '2500'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [656, 188.0]
+    rotation: 0
+    state: enabled
+- name: low_pass_filter_3
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: Mic profile LPF
+    cutoff_freq: '4500'
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_fff
+    width: '800'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [256, 320.0]
+    rotation: 0
+    state: enabled
+- name: low_pass_filter_7
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: Experimental crackle shaping
+    cutoff_freq: '7000'
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_fff
+    width: '3500'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [904, 640.0]
+    rotation: 0
+    state: enabled
+- name: low_pass_filter_8
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: Mic mode low-end boost tap
+    cutoff_freq: '260'
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_fff
+    width: '180'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [256, 368.0]
+    rotation: 0
+    state: enabled
+- name: note_0
+  id: note
+  parameters:
+    alias: ''
+    comment: ''
+    note: "PROFESSIONAL AM MODULATOR\n\nAudio processing:\n- 6 kHz LPF (sharp    \
+      \   cutoff)\n- HF boost (3-6 kHz range)\n- Strong AGC (max gain 20x)\n     \
+      \ nModulation:\n- Adjustable depth 0-150%\n- Negative peak limiting\n- 1   \
+      \    kHz carrier default\n\nOutput:\n- Power 0-50% (0.1% steps)\n- Line 2  \
+      \     (Virtual Audio Cable)\n- I/Q stereo"
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 936.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_time_sink_x_0
+  id: qtgui_time_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: blue
+    color10: dark blue
+    color2: red
+    color3: green
+    color4: black
+    color5: cyan
+    color6: magenta
+    color7: yellow
+    color8: dark red
+    color9: dark green
+    comment: ''
+    ctrlpanel: 'False'
+    entags: 'True'
+    grid: 'True'
+    gui_hint: 2,0,2,1
+    label1: After AGC
+    label10: ''
+    label2: After Modulation
+    label3: AM Envelope
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    marker1: '-1'
+    marker10: '-1'
+    marker2: '-1'
+    marker3: '-1'
+    marker4: '-1'
+    marker5: '-1'
+    marker6: '-1'
+    marker7: '-1'
+    marker8: '-1'
+    marker9: '-1'
+    name: Modulating Signal
+    nconnections: '3'
+    size: '4096'
+    srate: samp_rate
+    stemplot: 'False'
+    style1: '1'
+    style10: '1'
+    style2: '1'
+    style3: '1'
+    style4: '1'
+    style5: '1'
+    style6: '1'
+    style7: '1'
+    style8: '1'
+    style9: '1'
+    tr_chan: '0'
+    tr_delay: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: float
+    update_time: '0.16'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    ylabel: Amplitude
+    ymax: '3'
+    ymin: '-2'
+    yunit: '""'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [72, 800.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_time_sink_x_1
+  id: qtgui_time_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: blue
+    color10: dark blue
+    color2: red
+    color3: green
+    color4: black
+    color5: cyan
+    color6: magenta
+    color7: yellow
+    color8: dark red
+    color9: dark green
+    comment: ''
+    ctrlpanel: 'True'
+    entags: 'True'
+    grid: 'True'
+    gui_hint: 2,1,2,1
+    label1: I (In-phase)
+    label10: ''
+    label2: Q (Quadrature)
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    marker1: '-1'
+    marker10: '-1'
+    marker2: '-1'
+    marker3: '-1'
+    marker4: '-1'
+    marker5: '-1'
+    marker6: '-1'
+    marker7: '-1'
+    marker8: '-1'
+    marker9: '-1'
+    name: Output I/Q Signal
+    nconnections: '2'
+    size: '1024'
+    srate: samp_rate
+    stemplot: 'False'
+    style1: '1'
+    style10: '1'
+    style2: '1'
+    style3: '1'
+    style4: '1'
+    style5: '1'
+    style6: '1'
+    style7: '1'
+    style8: '1'
+    style9: '1'
+    tr_chan: '0'
+    tr_delay: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_NORM
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: float
+    update_time: '0.12'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    ylabel: Amplitude
+    ymax: '1.2'
+    ymin: '-1.2'
+    yunit: '""'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1576, 508.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_waterfall_sink_x_0
+  id: qtgui_waterfall_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    axislabels: 'True'
+    bw: samp_rate
+    color1: '0'
+    color10: '0'
+    color2: '0'
+    color3: '0'
+    color4: '0'
+    color5: '0'
+    color6: '0'
+    color7: '0'
+    color8: '0'
+    color9: '0'
+    comment: ''
+    fc: '0'
+    fftsize: '1024'
+    freqhalf: 'True'
+    grid: 'False'
+    gui_hint: 4,0,2,2
+    int_max: waterfall_brightness + 20
+    int_min: waterfall_brightness
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: Waterfall
+    nconnections: '1'
+    showports: 'False'
+    type: complex
+    update_time: '0.10'
+    wintype: window.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [728, 912.0]
+    rotation: 0
+    state: enabled
+- name: single_pole_iir_filter_xx_0
+  id: single_pole_iir_filter_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha: '0.01'
+    comment: Envelope smoothing for hum dynamics
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1400, 264.0]
+    rotation: 0
+    state: enabled
+- name: single_pole_iir_filter_xx_1
+  id: single_pole_iir_filter_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha: '0.00012'
+    comment: Antenna random slow envelope (cheap IIR)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [224, 736.0]
+    rotation: 0
+    state: enabled
+- name: single_pole_iir_filter_xx_2
+  id: single_pole_iir_filter_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha: '0.00040'
+    comment: Antenna random faster envelope (cheap IIR)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [224, 784.0]
+    rotation: 0
+    state: enabled
+- name: single_pole_iir_filter_xx_3
+  id: single_pole_iir_filter_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha: '0.005'
+    comment: Self-osc random pitch smooth (cheap IIR)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [416, 616.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [analog_agc2_xx_0, '0', analog_agc_xx_0, '0']
+- [analog_agc_xx_0, '0', blocks_max_xx_2, '0']
+- [analog_agc_xx_0, '0', blocks_min_xx_1, '0']
+- [analog_frequency_modulator_fc_0, '0', blocks_multiply_xx_0, '1']
+- [analog_noise_source_x_0, '0', low_pass_filter_1, '0']
+- [analog_noise_source_x_1, '0', low_pass_filter_2, '0']
+- [analog_noise_source_x_antenna, '0', blocks_add_xx_trash, '0']
+- [analog_noise_source_x_selfosc, '0', blocks_add_xx_trash, '1']
+- [analog_noise_source_x_xmode, '0', low_pass_filter_7, '0']
+- [analog_rail_ff_0, '0', audio_sink_0, '0']
+- [analog_rail_ff_0, '0', blocks_float_to_complex_1, '0']
+- [analog_rail_ff_0, '0', qtgui_time_sink_x_1, '0']
+- [analog_rail_ff_1, '0', audio_sink_0, '1']
+- [analog_rail_ff_1, '0', blocks_float_to_complex_1, '1']
+- [analog_rail_ff_1, '0', qtgui_time_sink_x_1, '1']
+- [analog_rail_ff_freqcmd, '0', analog_frequency_modulator_fc_0, '0']
+- [analog_rail_ff_hum, '0', blocks_multiply_xx_humdyn, '0']
+- [analog_rail_ff_pull, '0', blocks_multiply_const_vxx_audio_pull, '0']
+- [analog_sig_source_x_1, '0', blocks_add_xx_3, '0']
+- [analog_sig_source_x_2, '0', blocks_add_xx_3, '1']
+- [analog_sig_source_x_hum100, '0', blocks_multiply_const_vxx_hum100, '0']
+- [analog_sig_source_x_hum50, '0', blocks_add_xx_hum, '0']
+- [audio_source_0, '0', high_pass_filter_2, '0']
+- [audio_source_0, '0', low_pass_filter_0, '0']
+- [audio_source_0, '0', low_pass_filter_8, '0']
+- [blocks_abs_xx_0, '0', single_pole_iir_filter_xx_0, '0']
+- [blocks_add_const_vxx_0, '0', blocks_max_xx_0, '0']
+- [blocks_add_const_vxx_humdyn, '0', blocks_multiply_xx_humdyn, '1']
+- [blocks_add_xx_0, '0', high_pass_filter_1, '0']
+- [blocks_add_xx_1, '0', analog_rail_ff_freqcmd, '0']
+- [blocks_add_xx_2, '0', analog_agc2_xx_0, '0']
+- [blocks_add_xx_3, '0', blocks_add_xx_trash, '12']
+- [blocks_add_xx_antenna, '0', blocks_add_xx_trash, '5']
+- [blocks_add_xx_asym, '0', blocks_max_xx_1, '0']
+- [blocks_add_xx_hum, '0', analog_rail_ff_hum, '0']
+- [blocks_add_xx_mic, '0', blocks_multiply_const_vxx_mic_drive, '0']
+- [blocks_add_xx_selfosc, '0', blocks_add_xx_trash, '6']
+- [blocks_add_xx_trash, '0', blocks_null_sink_0, '0']
+- [blocks_complex_to_float_0, '0', analog_rail_ff_0, '0']
+- [blocks_complex_to_float_0, '1', analog_rail_ff_1, '0']
+- [blocks_float_to_complex_0, '0', blocks_multiply_xx_0, '0']
+- [blocks_float_to_complex_1, '0', qtgui_waterfall_sink_x_0, '0']
+- [blocks_max_xx_0, '0', blocks_float_to_complex_0, '0']
+- [blocks_max_xx_0, '0', qtgui_time_sink_x_0, '2']
+- [blocks_max_xx_1, '0', blocks_min_xx_0, '0']
+- [blocks_max_xx_2, '0', blocks_multiply_const_vxx_posdrive, '0']
+- [blocks_min_xx_0, '0', blocks_multiply_const_vxx_2, '0']
+- [blocks_min_xx_1, '0', blocks_add_xx_asym, '1']
+- [blocks_multiply_const_vxx_0, '0', blocks_add_const_vxx_0, '0']
+- [blocks_multiply_const_vxx_0, '0', qtgui_time_sink_x_0, '1']
+- [blocks_multiply_const_vxx_1, '0', blocks_complex_to_float_0, '0']
+- [blocks_multiply_const_vxx_2, '0', analog_rail_ff_pull, '0']
+- [blocks_multiply_const_vxx_2, '0', blocks_multiply_const_vxx_0, '0']
+- [blocks_multiply_const_vxx_antenna, '0', blocks_add_xx_1, '4']
+- [blocks_multiply_const_vxx_antenna_fast, '0', blocks_add_xx_trash, '8']
+- [blocks_multiply_const_vxx_antenna_slow, '0', blocks_add_xx_trash, '7']
+- [blocks_multiply_const_vxx_audio_pull, '0', blocks_add_xx_1, '1']
+- [blocks_multiply_const_vxx_drift, '0', blocks_add_xx_1, '2']
+- [blocks_multiply_const_vxx_hf, '0', blocks_add_xx_0, '1']
+- [blocks_multiply_const_vxx_hum, '0', blocks_add_xx_2, '2']
+- [blocks_multiply_const_vxx_hum100, '0', blocks_add_xx_hum, '1']
+- [blocks_multiply_const_vxx_humdyn, '0', blocks_add_const_vxx_humdyn, '0']
+- [blocks_multiply_const_vxx_mic_drive, '0', blocks_transcendental_1, '0']
+- [blocks_multiply_const_vxx_mic_low, '0', blocks_add_xx_mic, '1']
+- [blocks_multiply_const_vxx_mic_norm, '0', blocks_selector_0, '1']
+- [blocks_multiply_const_vxx_par_fm, '0', blocks_add_xx_1, '3']
+- [blocks_multiply_const_vxx_posdrive, '0', blocks_transcendental_0, '0']
+- [blocks_multiply_const_vxx_posnorm, '0', blocks_add_xx_asym, '0']
+- [blocks_multiply_const_vxx_selfosc, '0', blocks_add_xx_2, '1']
+- [blocks_multiply_const_vxx_selfosc_audio, '0', blocks_add_xx_trash, '10']
+- [blocks_multiply_const_vxx_selfosc_rand, '0', blocks_add_xx_trash, '9']
+- [blocks_multiply_const_vxx_xmode, '0', blocks_add_xx_1, '5']
+- [blocks_multiply_const_vxx_xmode, '0', blocks_add_xx_2, '3']
+- [blocks_multiply_xx_0, '0', blocks_multiply_const_vxx_1, '0']
+- [blocks_multiply_xx_humdyn, '0', blocks_multiply_const_vxx_hum, '0']
+- [blocks_selector_0, '0', blocks_add_xx_0, '0']
+- [blocks_selector_0, '0', high_pass_filter_0, '0']
+- [blocks_transcendental_0, '0', blocks_multiply_const_vxx_posnorm, '0']
+- [blocks_transcendental_1, '0', blocks_multiply_const_vxx_mic_norm, '0']
+- [blocks_vco_f_0, '0', blocks_null_sink_1, '0']
+- [blocks_vector_source_x_0, '0', blocks_max_xx_0, '1']
+- [blocks_vector_source_x_1, '0', blocks_max_xx_1, '1']
+- [blocks_vector_source_x_1_0, '0', blocks_min_xx_0, '1']
+- [blocks_vector_source_x_1_0, '0', qtgui_time_sink_x_0, '0']
+- [blocks_vector_source_x_2, '0', blocks_add_xx_antenna, '0']
+- [blocks_vector_source_x_2, '0', blocks_add_xx_antenna, '1']
+- [blocks_vector_source_x_2, '0', blocks_add_xx_selfosc, '0']
+- [blocks_vector_source_x_2, '0', blocks_add_xx_selfosc, '1']
+- [blocks_vector_source_x_2, '0', blocks_add_xx_selfosc, '2']
+- [blocks_vector_source_x_2, '0', blocks_max_xx_2, '1']
+- [blocks_vector_source_x_2, '0', blocks_min_xx_1, '1']
+- [blocks_vector_source_x_2, '0', blocks_multiply_const_vxx_antenna_fast, '0']
+- [blocks_vector_source_x_2, '0', blocks_multiply_const_vxx_antenna_slow, '0']
+- [blocks_vector_source_x_2, '0', blocks_multiply_const_vxx_selfosc_audio, '0']
+- [blocks_vector_source_x_2, '0', blocks_multiply_const_vxx_selfosc_rand, '0']
+- [blocks_vector_source_x_2, '0', blocks_vco_f_0, '0']
+- [blocks_vector_source_x_2, '0', single_pole_iir_filter_xx_1, '0']
+- [blocks_vector_source_x_2, '0', single_pole_iir_filter_xx_2, '0']
+- [blocks_vector_source_x_2, '0', single_pole_iir_filter_xx_3, '0']
+- [blocks_vector_source_x_carrier, '0', blocks_add_xx_1, '0']
+- [blocks_vector_source_x_selfosc_base, '0', blocks_add_xx_trash, '11']
+- [epy_block_antenna, '0', blocks_multiply_const_vxx_antenna, '0']
+- [epy_block_selfosc, '0', blocks_multiply_const_vxx_selfosc, '0']
+- [high_pass_filter_0, '0', blocks_multiply_const_vxx_hf, '0']
+- [high_pass_filter_1, '0', blocks_abs_xx_0, '0']
+- [high_pass_filter_1, '0', blocks_add_xx_2, '0']
+- [high_pass_filter_2, '0', low_pass_filter_3, '0']
+- [low_pass_filter_0, '0', blocks_selector_0, '0']
+- [low_pass_filter_1, '0', blocks_multiply_const_vxx_drift, '0']
+- [low_pass_filter_2, '0', blocks_multiply_const_vxx_par_fm, '0']
+- [low_pass_filter_3, '0', blocks_add_xx_mic, '0']
+- [low_pass_filter_7, '0', blocks_multiply_const_vxx_xmode, '0']
+- [low_pass_filter_8, '0', blocks_multiply_const_vxx_mic_low, '0']
+- [single_pole_iir_filter_xx_0, '0', blocks_multiply_const_vxx_humdyn, '0']
+- [single_pole_iir_filter_xx_1, '0', blocks_add_xx_trash, '2']
+- [single_pole_iir_filter_xx_2, '0', blocks_add_xx_trash, '3']
+- [single_pole_iir_filter_xx_3, '0', blocks_add_xx_trash, '4']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.12.0
