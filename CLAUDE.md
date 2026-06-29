@@ -36,33 +36,54 @@ cd c:/1/gr_hueta/oldam
 
 ## Сигнальная цепочка (по сути)
 
-1. Звук с `audio_source_0` чистится/формируется: LPF, HF-boost, профиль
-   Music/Mic (`blocks_selector_0` по `audio_profile`).
-2. Жёсткая обработка звука: асимметричный клиппинг, soft-clip (tanh,
-   `splatter_drive`), AGC (двойной — `agc2` + `agc`).
+1. Звук с `audio_source_0` или тестового 1 кГц тона (`epy_block_audio_mux`)
+   чистится/формируется: LPF, профиль Music/Mic (`blocks_selector_0` по
+   `audio_profile`).
+2. Жёсткая обработка звука: асимметричный клиппинг и AGC (двойной — `agc2` + `agc`).
 3. Подмешиваются паразитные компоненты: самовозбуждение (`epy_block_selfosc`),
-   фон 50 Гц с гармониками (`hum50`/`hum100`, динамика от огибающей).
-4. Формируется мгновенная частота несущей (`blocks_add_xx_1`, 6 входов):
-   несущая + audio pull + случайный дрейф + паразитная ЧМ + antenna wobble + X-mode.
-   Частотная команда ограничивается `analog_rail_ff_freqcmd` (±6000) и идёт в
-   `analog_frequency_modulator_fc_0` → это «грязный VFO».
-5. АМ: огибающая (`mod_depth`, DC-offset, negative peak limit) умножается на
-   комплексную несущую (`blocks_multiply_xx_0`).
+   фон 50 Гц с гармониками (`hum50`/`hum100`).
+4. Формируется мгновенная частота несущей (`blocks_add_xx_1`, 5 входов):
+   несущая + audio pull + случайный дрейф + паразитная ЧМ + X-mode.
+   Частотная команда ограничивается `analog_rail_ff_freqcmd` (±22000) и идёт в
+   `epy_block_dirty_rf` → это «грязный VFO».
+5. RF-формирование теперь делает embedded-блок **`epy_block_dirty_rf`**: он получает
+   готовую огибающую/processed audio и частотную команду, сам интегрирует VFO и
+   формирует AM / USB / LSB, а затем накладывает фейдинги, IMD3 и эфирный шум.
 6. Выход: power control → split I/Q → hard-clip каждого канала (`analog_rail_ff_0/1`)
    → `audio_sink_0` + осциллограф + водопад.
 
 ## Механики «грязи» (ручки в GUI)
 
-Рабочие: Carrier, Mod Depth, Negative Peak Limit, Output Power, HF Boost,
-Audio Pull, Drift, Parasitic FM, Self-Osc (level/on), Hum 50Hz (level/on/dynamic),
-Antenna Effect, Splatter Drive, Waterfall Brightness, Audio Profile.
+Рабочие: Carrier, Mod Depth, Negative Peak Limit, Output Power,
+Audio Pull, Drift, Parasitic FM, Self-Osc (level/on), Hum 50Hz (level/on),
+Waterfall Brightness, Audio Profile, Test Tone 1kHz, Mode (AM/USB/LSB),
+SSB Carrier Leak, SSB Bad Filter, Fading Level, Selective Fading, Flutter Fading,
+IMD3 Splatter, Air Noise.
 
-Частично/не доведены до рабочего состояния: многие ветки сведены в
-`blocks_add_xx_trash` (13-входной сумматор) → `blocks_null_sink_0` и реально
-**не влияют** на выход. Это «кладбище» legacy-экспериментов: antenna random walk
-(`blocks_add_xx_antenna`), часть self-osc математики (`blocks_add_xx_selfosc`,
-`blocks_vco_f_0` → `null_sink_1`), Mic Chaos / X-Mode частично. При доработке
-функций смотреть, не уходит ли ветка в trash/null, прежде чем чинить «логику».
+Удалены как мёртвый/не тот груз: `hum_dynamic`, `antenna_hz` / Antenna Effect,
+`splatter_drive`, `hf_boost`, а также старое `blocks_add_xx_trash` кладбище.
+
+`mod_depth`: диапазон 0–200%, дефолт 150%.
+
+Потолок несущей 6 кГц был от `analog_rail_ff_freqcmd` (`hi/lo = ±6000`), а не от
+Найквиста. Сейчас guard поднят до ±22000 Гц (для `samp_rate=48000` complex IQ,
+с запасом до ±24 кГц), а финальный VFO внутри `epy_block_dirty_rf` дополнительно
+клампит команду примерно до ±0.46*Fs, чтобы не лезть прямо в край Найквиста.
+
+Частично/не доведены до рабочего состояния: Mic Chaos / X-Mode по-прежнему
+экспериментальные, но старое кладбище `blocks_add_xx_trash` удалено.
+
+Новые embedded-блоки:
+- `epy_block_audio_mux`: выбирает VAC-вход или 1 кГц тестовый тон. При включённом
+  тестовом тоне VAC реально мьютится.
+- `epy_block_dirty_rf`: AM/USB/LSB, плохая фильтрация SSB (утечка второй боковой),
+  остаточная несущая SSB, slow flat fading, selective/multipath fading, flutter,
+  cubic IMD3 splatter, complex air noise.
+
+Примечание: `epy_block_dirty_rf` в AM-режиме НЕ применяет `mod_depth` второй раз —
+он использует уже готовую upstream-огибающую после `mod_depth`, DC offset и
+negative peak limiter. В SSB он использует тот же processed audio как базу для
+однополосного сигнала.
 
 ## Известные проблемы и фиксы
 
